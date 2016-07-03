@@ -24,7 +24,8 @@
     {
       "locator": "https://github.com/Wikitude/wikitude-cordova-plugin.git",
       "id": "com.wikitude.phonegap.WikitudePlugin"
-    }
+    },
+    "cordova-plugin-camera"
   ],
   "cordovaPlatforms": []
 }
