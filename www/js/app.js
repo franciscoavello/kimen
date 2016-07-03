@@ -35,7 +35,8 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
     url: '/datosLoc',
     views: {
       'vistaAPPPrincipal': {
-        templateUrl: 'views/datosLoc.html'
+        templateUrl: 'views/datosLoc.html',
+        controller: 'MapCtrl'
       }
     }
   })
