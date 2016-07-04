@@ -1,11 +1,6 @@
 var myApp = angular.module('controladoresKimen', ['ionic', 'ngCordova'])
 
-myApp.controller('CameraCtrl', function($scope, $cordovaCamera, $cordovaGeolocation,$location, $rootScope, $timeout){
-
-
-})
-
-myApp.controller('MapCtrl', function($scope, $location, $cordovaGeolocation,$rootScope) {
+myApp.controller('MapCtrl', function($scope, $location, $cordovaGeolocation,$rootScope,$cordovaDialogs) {
 
 	$scope.obtenerLocalizacionMapa = function(){
 		var options = {timeout: 10000, enableHighAccuracy: true};
@@ -44,7 +39,7 @@ myApp.controller('MapCtrl', function($scope, $location, $cordovaGeolocation,$roo
 	$scope.activarWatcher = function(){
 			var watchOptions = {
 				maximumAge: 3600000,
-				timeout : 100000,
+				timeout : 10000,
 				enableHighAccuracy: false
 			};
 			var watch = $cordovaGeolocation.watchPosition(watchOptions);
@@ -56,10 +51,47 @@ myApp.controller('MapCtrl', function($scope, $location, $cordovaGeolocation,$roo
 				$rootScope.longitud = position.coords.longitude;
 				$rootScope.altitud = position.coords.altitude;
 			});
+	};
+});
 
-
+myApp.controller('IonicitudeCtrl', function($scope, Ionicitude,$cordovaDialogs){
+	$scope.revisarDispositivo = function(){
+		Ionicitude.init({
+			doDeviceCheck: false
+		});
+		Ionicitude.checkDevice()
+		.then(function(success) {
+			$cordovaDialogs.alert(success, 'Ionicitude', 'Atrás')
+		    .then(function() {
+		      $scope.iniciarIonicitude();
+		    });
+		})
+		.catch(function(error) {
+			$cordovaDialogs.alert(error, 'Ionicitude', 'Atrás')
+		    .then(function() {		      
+		    });
+		});
 	};
 
-
+	$scope.iniciarIonicitude = function(){
+		    Ionicitude.launchAR("prueba")
+		        .then(function(success) {
+		            $cordovaDialogs.alert(success, 'Ionicitude 2', 'Atrás')
+				    .then(function() {
+				      // callback success
+				    });
+		        })
+		        .catch(function(error) {
+		            $cordovaDialogs.alert(error, 'Ionicitude 2', 'Atrás')
+				    .then(function() {
+				      // callback success
+				    });
+		        });
+	};
 
 });
+
+
+
+
+		
