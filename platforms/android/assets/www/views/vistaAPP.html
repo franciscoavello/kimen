@@ -1,0 +1,54 @@
+<ion-side-menus enable-menu-with-back-views="false">
+  <ion-side-menu-content>
+    <ion-nav-bar class="bar-stable">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+      </ion-nav-buttons>
+
+    </ion-nav-bar>
+
+    <ion-nav-view name="vistaAPPPrincipal"></ion-nav-view>
+  </ion-side-menu-content>
+
+  <ion-side-menu side="left">
+    <ion-header-bar class="bar-stable">
+      <h1 class="title">Juan Pérez</h1>
+    </ion-header-bar>
+    <ion-content>
+      <ion-list>
+    	<ion-item menu-close class="item item-icon-left" ui-sref="vistaAPP.datosLoc" ng-controller="MapCtrl" ng-click="obtenerLocalizacionMapa()">
+    		<i class="icon ion-earth"></i>
+    		Explorar
+  		</ion-item>
+  		<ion-item menu-close class="item item-icon-left" ui-sref="vistaAPP.nuevoPunto">
+    		<i class="icon ion-ios-location"></i>
+    		Agregar punto de interés
+  		</ion-item>
+        <div class="item item-divider">
+  		</div>
+        <ion-item menu-close >
+          Configuración
+        </ion-item>
+        <ion-item menu-close href="#/app/playlists">
+          Comparte con amigos
+        </ion-item>
+        <ion-item menu-close href="#/app/playlists">
+          Calificar
+        </ion-item>
+        <ion-item menu-close href="#/app/playlists">
+          Contacto
+        </ion-item>
+        <ion-item menu-close href="#/app/playlists">
+          Reportar problema
+        </ion-item>
+        <ion-item menu-close href="#/app/playlists">
+          Ayuda
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>

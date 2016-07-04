@@ -5,11 +5,11 @@
 </div>
 <div class="row">
 	<div class="col col-100 text-center">
-		<button class="button button-block button-balanced">Registrarse</button>
+		<button class="button button-block button-balanced"  ui-sref="vistaAPP.nuevoRegistro">Registrarse</button>
 	</div>
 </div>
 <div class="row">
 	<div class="col col-100 text-center">
-		<button class="button button-block button-stable" ui-sref="vistaAPP.datosLoc">Invitado</button>
+		<button class="button button-block button-stable" ng-controller="MapCtrl" ng-click="obtenerLocalizacionMapa()" ui-sref="vistaAPP.datosLoc">Invitado</button>
 	</div>
 </div>
