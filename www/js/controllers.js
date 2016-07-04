@@ -2,60 +2,64 @@ var myApp = angular.module('controladoresKimen', ['ionic', 'ngCordova'])
 
 myApp.controller('CameraCtrl', function($scope, $cordovaCamera, $cordovaGeolocation,$location, $rootScope, $timeout){
 
-	$scope.takePicture = function(){
-		$cordovaCamera.getPicture({})
-			.then(function(data){
 
-			}, function(error){
-
-			});
-	};	
-
-	$scope.obtenerLocalizacion = function(){
-		var posOptions = {timeout: 10000, enableHighAccuracy: true};
-		$cordovaGeolocation
-		    .getCurrentPosition(posOptions)
-		    .then(function (position) {
-		      var lat  = position.coords.latitude;
-		      var long = position.coords.longitude;
-		      $rootScope.latitud = lat;
-		      $rootScope.longitud = long;
-		      console.log($rootScope.latitud);
-		      console.log($rootScope.longitud);
-		      $location.path('/vistaAPP/datosLoc');
-		    }, function(err) {
-		      // error
-		    });
-	};	
 })
 
-myApp.controller('MapCtrl', function($scope, $state, $cordovaGeolocation,$rootScope) {
- 	  var options = {timeout: 10000, enableHighAccuracy: true};
- 
-	  $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+myApp.controller('MapCtrl', function($scope, $location, $cordovaGeolocation,$rootScope) {
 
-	    $rootScope.latitud = position.coords.latitude;
-	    $rootScope.longitud = position.coords.longitude;
-	    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-	 
-	    var mapOptions = {
-	      center: latLng,
-	      zoom: 15,
-	      mapTypeId: google.maps.MapTypeId.ROADMAP
-	    };
-	 
-	    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-	 	
-	 	google.maps.event.addListenerOnce($scope.map, 'idle', function(){
- 
-		  var marker = new google.maps.Marker({
-		      map: $scope.map,
-		      animation: google.maps.Animation.DROP,
-		      position: latLng
-		  });      
+	$scope.obtenerLocalizacionMapa = function(){
+		var options = {timeout: 10000, enableHighAccuracy: true};
+	    $cordovaGeolocation.getCurrentPosition(options).then(function(position){	    	
+		    $rootScope.latitud = position.coords.latitude;
+		    $rootScope.longitud = position.coords.longitude;
+		    $rootScope.altitud = position.coords.altitude;
+		    console.log($rootScope.latitud);
+		    console.log($rootScope.longitud);
+		    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 		 
+		    var mapOptions = {
+			    center: latLng,
+		    	zoom: 15,
+			    mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
+			 
+			$scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+			 	
+			google.maps.event.addListenerOnce($scope.map, 'idle', function(){	 
+				var marker = new google.maps.Marker({
+					map: $scope.map,
+					animation: google.maps.Animation.DROP,
+					position: latLng
+				});      
+			});
+			$scope.activarWatcher();
+
+		}, function(error){
+			console.log("No se pudo obtener la localización");
 		});
-	  }, function(error){
-	    console.log("Could not get location");
-	  });
+	};	
+
+
+    // Watch para obtener la posición si es que se mueve el usuario
+	$scope.activarWatcher = function(){
+			var watchOptions = {
+				maximumAge: 3600000,
+				timeout : 100000,
+				enableHighAccuracy: false
+			};
+			var watch = $cordovaGeolocation.watchPosition(watchOptions);
+			watch.then(null, function(err){
+				console.log("Error al actualizar la posición");
+			}, function(position) {
+				console.log(position);
+				$rootScope.latitud = position.coords.latitude;
+				$rootScope.longitud = position.coords.longitude;
+				$rootScope.altitud = position.coords.altitude;
+			});
+
+
+	};
+
+
+
 });

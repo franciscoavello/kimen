@@ -40,9 +40,22 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
       }
     }
   })
-  .state('nuevoRegistro', {
+  .state('vistaAPP.nuevoPunto', {
+    url: '/nuevoPunto',
+    views: {
+      'vistaAPPPrincipal': {
+        templateUrl: 'views/nuevoPunto.html',
+        controller: 'CameraCtrl'
+      }
+    }
+  })
+  .state('vistaAPP.nuevoRegistro', {
     url: "/nuevoRegistro",
-    templateUrl: "views/nuevoRegistro.html",
+    views: {
+      'vistaAPPPrincipal': {
+        templateUrl: 'views/nuevoRegistro.html'
+      }
+    }
   })
   .state('404',   {
   	url: '/404',
